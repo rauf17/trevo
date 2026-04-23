@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TreeNode } from "../data/templates";
 
 const getFileColor = (name: string) => {
@@ -43,6 +43,14 @@ export default function TreeView({ tree, depth = 0, activeLines = [] }: { tree: 
 function TreeItem({ node, depth, index, isLast, activeLines }: { node: TreeNode, depth: number, index: number, isLast: boolean, activeLines: number[] }) {
   const [isOpen, setIsOpen] = useState(true);
   const isFolder = node.type === "folder";
+  
+  useEffect(() => {
+    const handleToggle = (e: CustomEvent) => {
+      if (isFolder) setIsOpen(e.detail.expand);
+    };
+    window.addEventListener('toggle-all-nodes', handleToggle as EventListener);
+    return () => window.removeEventListener('toggle-all-nodes', handleToggle as EventListener);
+  }, [isFolder]);
   
   const nextActiveLines = isLast ? activeLines : [...activeLines, depth];
 

@@ -6,10 +6,14 @@ import TemplateCard from "./TemplateCard";
 
 const CATEGORIES = ["All", "Frontend", "Backend", "Fullstack", "Mobile", "CLI", "Monorepo"];
 
-export default function Sidebar() {
+type SidebarProps = {
+  activeTemplateId: string | null;
+  onSelectTemplate: (id: string) => void;
+};
+
+export default function Sidebar({ activeTemplateId, onSelectTemplate }: SidebarProps) {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeTemplateId, setActiveTemplateId] = useState<string | null>(null);
 
   const filteredTemplates = templates.filter(t => {
     const matchesCategory = activeCategory === "All" || t.category.toLowerCase() === activeCategory.toLowerCase();
@@ -77,7 +81,7 @@ export default function Sidebar() {
               key={template.id} 
               template={template} 
               isActive={activeTemplateId === template.id}
-              onClick={() => setActiveTemplateId(template.id)}
+              onClick={() => onSelectTemplate(template.id)}
             />
           ))
         ) : (
