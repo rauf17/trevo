@@ -1,32 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { Template, TreeNode } from "../data/templates";
-
-const generateAsciiTree = (nodes: TreeNode[], prefix = ""): string => {
-  let result = "";
-  nodes.forEach((node, i) => {
-    const isLast = i === nodes.length - 1;
-    const connector = isLast ? "└── " : "├── ";
-    result += `${prefix}${connector}${node.name}\n`;
-    if (node.type === "folder" && node.children) {
-      const childPrefix = prefix + (isLast ? "    " : "│   ");
-      result += generateAsciiTree(node.children, childPrefix);
-    }
-  });
-  return result;
-};
+import { Template } from "../data/templates";
+import { generateFullAsciiTree } from "../utils/treeToAscii";
 
 export default function Toolbar({ template }: { template: Template }) {
   const [isExpanded, setIsExpanded] = useState(true);
+  const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    const treeText = `${template.name}\n${generateAsciiTree(template.tree)}`;
+    const treeText = generateFullAsciiTree(template.id, template.tree);
     navigator.clipboard.writeText(treeText);
+    
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
   };
 
   const handleDownload = () => {
-    const treeText = `${template.name}\n${generateAsciiTree(template.tree)}`;
+    const treeText = generateFullAsciiTree(template.id, template.tree);
     const blob = new Blob([treeText], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -46,13 +39,24 @@ export default function Toolbar({ template }: { template: Template }) {
     <div className="flex items-center gap-2">
       <button 
         onClick={handleCopy}
-        className="px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-colors flex items-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)]"
+        className="px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-colors flex items-center justify-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)] min-w-[130px]"
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-        </svg>
-        Copy as Text
+        {copied ? (
+          <>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-in zoom-in duration-200">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span className="text-[#10b981]">Copied!</span>
+          </>
+        ) : (
+          <>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            Copy as Text
+          </>
+        )}
       </button>
 
       <button 
