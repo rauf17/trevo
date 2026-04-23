@@ -71,7 +71,7 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
 
       {/* Sidebar Drawer / Fixed Column */}
       <aside 
-        className={`fixed inset-y-0 left-0 z-50 w-[280px] bg-panel border-r border-[var(--border-subtle)] flex flex-col transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0
+        className={`fixed inset-y-0 left-0 z-50 w-[320px] bg-panel border-r border-[var(--border-subtle)] flex flex-col transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0
           ${isOpenMobile ? 'translate-x-0' : '-translate-x-full'}
         `}
       >

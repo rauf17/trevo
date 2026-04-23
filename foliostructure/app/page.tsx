@@ -5,11 +5,13 @@ import Sidebar from "@/components/Sidebar";
 import Toolbar from "@/components/Toolbar";
 import TreeView from "@/components/TreeView";
 import { templates } from "@/data/templates";
+import { generateFullAsciiTree } from "@/utils/treeToAscii";
 
 export default function Page() {
   const [activeTemplateId, setActiveTemplateId] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [viewMode, setViewMode] = useState<"ide" | "ascii">("ide");
 
   const activeTemplate = templates.find(t => t.id === activeTemplateId);
 
@@ -41,14 +43,12 @@ export default function Page() {
             </svg>
           </button>
           
-          <div className="flex items-center gap-2 text-primary opacity-80">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="3" y="3" width="7" height="7" rx="1" />
-              <rect x="14" y="3" width="7" height="7" rx="1" />
-              <rect x="14" y="14" width="7" height="7" rx="1" />
-              <rect x="3" y="14" width="7" height="7" rx="1" />
-            </svg>
-            <h1 className="text-[15px] font-[510] tracking-tight">FolioStructure</h1>
+          <div className="flex items-center gap-2">
+            <span className="text-base">🌿</span>
+            <div className="flex items-baseline gap-2">
+              <h1 className="text-[15px] font-[590] tracking-[-0.3px] text-primary">Trevo</h1>
+              <span className="text-[12px] text-subtle font-normal hidden sm:inline-block">folder structure generator</span>
+            </div>
           </div>
         </div>
 
@@ -70,9 +70,9 @@ export default function Page() {
         
         <main className="flex-1 flex flex-col relative h-full overflow-y-auto w-full">
           {activeTemplate ? (
-            <div className="flex flex-col max-w-4xl w-full p-6 md:p-10 gap-6 md:gap-8 mx-auto">
+            <div className="flex flex-col max-w-4xl w-full px-6 md:px-10 pb-10 gap-6 md:gap-8 mx-auto">
               {/* Header Area */}
-              <div className="flex flex-col gap-3 mt-2 md:mt-4">
+              <div className="flex flex-col gap-3 pt-[24px] pb-[20px] border-b border-[var(--border-subtle)]">
                 <div className="flex flex-wrap items-center gap-3">
                   <span className="text-[32px] leading-none">{activeTemplate.icon}</span>
                   <h2 className="text-[20px] md:text-[24px] font-[510] tracking-[-0.288px] text-primary leading-tight">
@@ -89,14 +89,14 @@ export default function Page() {
 
               {/* Toolbar */}
               <div className="overflow-x-auto pb-2 -mx-6 px-6 md:mx-0 md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                <Toolbar template={activeTemplate} />
+                <Toolbar template={activeTemplate} viewMode={viewMode} setViewMode={setViewMode} />
               </div>
 
               {/* Tree Area */}
-              <div className="bg-surface border border-[var(--border-default)] rounded-[8px] p-[16px] md:p-[20px] min-h-[300px]">
+              <div className="min-h-[300px]">
                 {isTransitioning ? (
                   /* Shimmer Skeleton */
-                  <div className="flex flex-col gap-3 opacity-60">
+                  <div className="bg-surface border border-[var(--border-default)] rounded-[8px] p-[16px] md:p-[20px] flex flex-col gap-3 opacity-60">
                     <div className="h-5 w-[40%] rounded animate-shimmer" />
                     <div className="h-5 w-[30%] rounded animate-shimmer ml-6" />
                     <div className="h-5 w-[45%] rounded animate-shimmer ml-6" />
@@ -104,8 +104,16 @@ export default function Page() {
                     <div className="h-5 w-[50%] rounded animate-shimmer ml-12" />
                     <div className="h-5 w-[40%] rounded animate-shimmer ml-6" />
                   </div>
+                ) : viewMode === "ascii" ? (
+                  /* ASCII View */
+                  <pre className="bg-surface border border-[var(--border-default)] rounded-[8px] p-[20px] font-mono text-[13px] leading-[1.8] text-secondary overflow-auto">
+                    {generateFullAsciiTree(activeTemplate.id, activeTemplate.tree)}
+                  </pre>
                 ) : (
-                  <TreeView key={activeTemplate.id} tree={activeTemplate.tree} />
+                  /* IDE View */
+                  <div className="bg-surface border border-[var(--border-default)] rounded-[8px] p-[16px] md:p-[20px]">
+                    <TreeView key={activeTemplate.id} tree={activeTemplate.tree} />
+                  </div>
                 )}
               </div>
             </div>

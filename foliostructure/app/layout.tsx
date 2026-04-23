@@ -16,8 +16,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Foliostructure",
-  description: "Linear-inspired design system",
+  title: "Trevo",
+  description: "folder structure generator",
 };
 
 export default function RootLayout({
