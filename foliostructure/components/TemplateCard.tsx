@@ -12,6 +12,9 @@ type TemplateCardProps = {
 export default function TemplateCard({ template, isActive, isFocused, onClick }: TemplateCardProps) {
   return (
     <div className="relative w-full rounded-md group">
+      {/* Shimmer Sweep Effect */}
+      <div className="absolute top-0 bottom-0 left-0 w-[60%] bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.04)_50%,transparent_100%)] opacity-0 group-hover:opacity-100 group-hover:animate-card-shimmer pointer-events-none z-20 rounded-md overflow-hidden" />
+
       {/* Main Button Surface */}
       <button
         onClick={onClick}
@@ -19,15 +22,28 @@ export default function TemplateCard({ template, isActive, isFocused, onClick }:
           ${isActive 
             ? 'animate-card-breathing' 
             : isFocused 
-              ? 'bg-[rgba(255,255,255,0.03)] hover:translate-x-[3px]' 
-              : 'hover:bg-[rgba(255,255,255,0.03)] hover:translate-x-[3px] bg-transparent'}
+              ? 'bg-[rgba(255,255,255,0.03)] hover:-translate-y-[1px] hover:shadow-[0_4px_16px_rgba(0,0,0,0.3)]' 
+              : 'hover:bg-[rgba(255,255,255,0.03)] hover:-translate-y-[1px] hover:shadow-[0_4px_16px_rgba(0,0,0,0.3)] bg-transparent'}
         `}
         style={isActive ? {
           background: 'linear-gradient(90deg, rgba(94,106,210,0.08) 0%, transparent 100%)'
         } : {}}
       >
-        <div className="flex-shrink-0 mt-0.5 text-base">
-          {template.icon}
+        <div className="flex-shrink-0 mt-0.5 text-base flex items-center relative">
+          {/* Category Dot */}
+          <div 
+            className={`w-[6px] h-[6px] rounded-full absolute -left-2 ${isActive ? 'animate-dot-pulse' : ''}`}
+            style={{ 
+              backgroundColor: 
+                template.category === 'Frontend' ? '#22d3ee' :
+                template.category === 'Backend' ? '#10b981' :
+                template.category === 'Fullstack' ? '#7170ff' :
+                template.category === 'Mobile' ? '#f59e0b' :
+                template.category === 'CLI' ? '#8a8f98' :
+                template.category === 'Monorepo' ? '#e06c75' : '#c678dd'
+            }}
+          />
+          <span className="ml-1">{template.icon}</span>
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
@@ -58,6 +74,22 @@ export default function TemplateCard({ template, isActive, isFocused, onClick }:
         }
         .animate-card-breathing {
           animation: card-breathing 2s infinite ease-in-out;
+        }
+
+        @keyframes card-shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(200%); }
+        }
+        .animate-card-shimmer {
+          animation: card-shimmer 600ms ease forwards;
+        }
+
+        @keyframes dot-pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.3); }
+        }
+        .animate-dot-pulse {
+          animation: dot-pulse 2s infinite ease-in-out;
         }
       `}</style>
     </div>

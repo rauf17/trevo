@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Template } from "../data/templates";
 import { generateFullAsciiTree, generateFullIndentTree } from "../utils/treeToAscii";
+import { useToast } from "@/components/ToastProvider";
 
 type ToolbarProps = {
   template: Template;
@@ -12,7 +13,7 @@ type ToolbarProps = {
 
 export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProps) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [copied, setCopied] = useState(false);
+  const { addToast } = useToast();
 
   const handleCopy = () => {
     const treeText = viewMode === "ascii" 
@@ -20,11 +21,7 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
       : generateFullIndentTree(template.id, template.tree);
       
     navigator.clipboard.writeText(treeText);
-    
-    setCopied(true);
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
+    addToast("Copied to clipboard");
   };
 
   const handleDownload = () => {
@@ -39,6 +36,8 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
     a.download = `${template.id}-structure.txt`;
     a.click();
     URL.revokeObjectURL(url);
+    
+    addToast("Download started", `${template.id}-structure.txt`, "download");
   };
 
   const handleToggleAll = () => {
@@ -49,32 +48,34 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
 
   return (
     <div className="flex items-center w-full min-w-max">
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes toolbar-btn-in {
+          0% { transform: translateY(8px); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+        .animate-toolbar-btn {
+          opacity: 0;
+          animation: toolbar-btn-in 250ms ease-out forwards;
+        }
+      `}} />
+      
       <div className="flex items-center gap-2">
         <button 
           onClick={handleCopy}
-          className="px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-all duration-100 hover:scale-[1.02] hover:brightness-110 flex items-center justify-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)] min-w-[130px]"
+          className="animate-toolbar-btn px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-all duration-100 hover:scale-[1.02] active:scale-96 hover:brightness-110 flex items-center justify-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)] min-w-[130px]"
+          style={{ animationDelay: '0ms' }}
         >
-          {copied ? (
-            <>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-in zoom-in duration-200">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
-              <span className="text-[#10b981]">Copied!</span>
-            </>
-          ) : (
-            <>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-              </svg>
-              Copy as Text
-            </>
-          )}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+          </svg>
+          Copy as Text
         </button>
 
         <button 
           onClick={handleDownload}
-          className="px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-all duration-100 hover:scale-[1.02] hover:brightness-110 flex items-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)]"
+          className="animate-toolbar-btn px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-all duration-100 hover:scale-[1.02] active:scale-96 hover:brightness-110 flex items-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)]"
+          style={{ animationDelay: '80ms' }}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -86,7 +87,8 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
 
         <button 
           onClick={handleToggleAll}
-          className="px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-all duration-100 hover:scale-[1.02] hover:brightness-110 flex items-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)]"
+          className="animate-toolbar-btn px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-all duration-100 hover:scale-[1.02] active:scale-96 hover:brightness-110 flex items-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)]"
+          style={{ animationDelay: '160ms' }}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             {isExpanded ? (
@@ -110,14 +112,15 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
       </div>
 
       {/* View Switcher */}
-      <div className="ml-auto flex items-center gap-1 bg-[rgba(255,255,255,0.02)] border border-[var(--border-default)] p-1 rounded-[8px]">
+      <div className="ml-auto flex items-center gap-1 bg-[rgba(255,255,255,0.02)] border border-[var(--border-default)] p-1 rounded-[8px] animate-toolbar-btn" style={{ animationDelay: '240ms' }}>
         <button
           onClick={() => setViewMode("ide")}
-          className={`flex items-center justify-center py-1 px-2.5 rounded-[6px] transition-all duration-100 hover:scale-[1.02] hover:brightness-110
+          className={`flex items-center justify-center py-1 px-2.5 rounded-[6px] transition-all duration-100 hover:scale-[1.02] active:scale-96 hover:brightness-110
             ${viewMode === "ide" 
-              ? "bg-accent text-white shadow-sm" 
+              ? "text-white shadow-[0_2px_8px_rgba(94,106,210,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]" 
               : "text-muted hover:text-primary"}
           `}
+          style={viewMode === "ide" ? { background: 'linear-gradient(135deg, rgba(94,106,210,0.9), rgba(113,112,255,0.7))' } : {}}
           title="IDE View"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -130,11 +133,12 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
         
         <button
           onClick={() => setViewMode("ascii")}
-          className={`flex items-center justify-center py-1 px-2.5 rounded-[6px] transition-all duration-100 hover:scale-[1.02] hover:brightness-110
+          className={`flex items-center justify-center py-1 px-2.5 rounded-[6px] transition-all duration-100 hover:scale-[1.02] active:scale-96 hover:brightness-110
             ${viewMode === "ascii" 
-              ? "bg-accent text-white shadow-sm" 
+              ? "text-white shadow-[0_2px_8px_rgba(94,106,210,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]" 
               : "text-muted hover:text-primary"}
           `}
+          style={viewMode === "ascii" ? { background: 'linear-gradient(135deg, rgba(94,106,210,0.9), rgba(113,112,255,0.7))' } : {}}
           title="ASCII View"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

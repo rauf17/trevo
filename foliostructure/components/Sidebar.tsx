@@ -18,6 +18,7 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
+  const [isPoofing, setIsPoofing] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
 
   const filteredTemplates = templates.filter(t => {
@@ -101,8 +102,30 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
               placeholder="Search templates..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[rgba(255,255,255,0.04)] border border-[var(--border-default)] rounded-[6px] pl-8 pr-3 py-1.5 text-[13px] text-primary placeholder-[var(--text-subtle)] outline-none focus:border-[rgba(113,112,255,0.4)] focus:shadow-[0_0_0_3px_rgba(113,112,255,0.1)] focus:bg-[rgba(255,255,255,0.06)] transition-all"
+              className="w-full bg-[rgba(255,255,255,0.04)] border border-[var(--border-default)] rounded-[6px] pl-8 pr-[70px] py-1.5 text-[13px] text-primary placeholder-[var(--text-subtle)] outline-none focus:border-[rgba(113,112,255,0.4)] focus:shadow-[0_0_0_3px_rgba(113,112,255,0.1)] focus:bg-[rgba(255,255,255,0.06)] transition-all"
             />
+            {searchQuery && (
+              <>
+                <div className="absolute right-7 text-[11px] text-[var(--text-subtle)] pointer-events-none">
+                  {filteredTemplates.length} matches
+                </div>
+                <button 
+                  onClick={() => {
+                    setIsPoofing(true);
+                    setTimeout(() => {
+                      setSearchQuery("");
+                      setIsPoofing(false);
+                    }, 200);
+                  }}
+                  className={`absolute right-2.5 text-subtle hover:text-primary transition-colors ${isPoofing ? 'animate-poof' : ''}`}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </>
+            )}
           </div>
         </div>
 
@@ -153,8 +176,8 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
               </div>
             ))
           ) : (
-            <div className="p-6 text-center text-[13px] text-muted">
-              No templates match your search.
+            <div className="p-6 text-center text-[13px] text-muted animate-shake">
+              No files found
             </div>
           )}
         </div>
@@ -168,6 +191,23 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
           opacity: 0;
           animation: sidebar-card 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
+
+        @keyframes poof {
+          0% { transform: scale(1); opacity: 1; }
+          50% { transform: scale(1.3); opacity: 0.5; }
+          100% { transform: scale(0); opacity: 0; }
+        }
+        .animate-poof { animation: poof 200ms ease-out forwards; }
+        
+        @keyframes shake {
+          0% { transform: translateX(0); }
+          20% { transform: translateX(-8px); }
+          40% { transform: translateX(8px); }
+          60% { transform: translateX(-4px); }
+          80% { transform: translateX(4px); }
+          100% { transform: translateX(0); }
+        }
+        .animate-shake { animation: shake 400ms ease-in-out; }
       `}</style>
     </>
   );

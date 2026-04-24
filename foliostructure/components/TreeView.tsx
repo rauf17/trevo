@@ -42,6 +42,7 @@ export default function TreeView({ tree, depth = 0, activeLines = [] }: { tree: 
 
 function TreeItem({ node, depth, index, isLast, activeLines }: { node: TreeNode, depth: number, index: number, isLast: boolean, activeLines: number[] }) {
   const [isOpen, setIsOpen] = useState(true);
+  const [isFlashing, setIsFlashing] = useState(false);
   const isFolder = node.type === "folder";
   
   useEffect(() => {
@@ -52,19 +53,29 @@ function TreeItem({ node, depth, index, isLast, activeLines }: { node: TreeNode,
     return () => window.removeEventListener('toggle-all-nodes', handleToggle as EventListener);
   }, [isFolder]);
   
+  const handleNodeClick = () => {
+    if (isFolder) {
+      if (!isOpen) {
+        setIsFlashing(true);
+        setTimeout(() => setIsFlashing(false), 400);
+      }
+      setIsOpen(!isOpen);
+    }
+  };
+
   const nextActiveLines = isLast ? activeLines : [...activeLines, depth];
 
   return (
     <div className="w-full">
       <div 
-        className="group w-full flex items-center relative hover:bg-[rgba(255,255,255,0.03)] cursor-pointer py-[5px] pr-2 rounded-sm transition-colors border-l-[2px] border-transparent hover:border-[rgba(113,112,255,0.4)]"
+        className="group w-full flex items-center relative hover:bg-[rgba(255,255,255,0.03)] bg-transparent cursor-pointer py-[5px] pr-2 rounded-sm transition-colors duration-800 hover:duration-0 border-l-[2px] border-transparent hover:border-[rgba(113,112,255,0.4)]"
         style={{ 
-          paddingLeft: `${depth * 20 + 6}px`, // reduced by 2px to account for the border
+          paddingLeft: `${depth * 20 + 6}px`, 
           animation: 'tree-fade-in 200ms ease-out forwards',
           opacity: 0,
           animationDelay: `${(depth * 5 + index) * 20}ms`
         }}
-        onClick={() => isFolder && setIsOpen(!isOpen)}
+        onClick={handleNodeClick}
       >
         {Array.from({ length: depth }).map((_, d) => {
           if (d === depth - 1) {
@@ -86,26 +97,38 @@ function TreeItem({ node, depth, index, isLast, activeLines }: { node: TreeNode,
           return null;
         })}
 
-        <div className="flex items-center gap-1.5 relative z-10 w-full">
-          {isFolder ? (
-            <svg 
-              width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-              className={`text-[var(--text-secondary)] shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}
+        <div className="flex items-center gap-1.5 relative z-10 w-full justify-between pr-2">
+          <div className="flex items-center gap-1.5">
+            {isFolder ? (
+              <svg 
+                width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                className={`text-[var(--text-secondary)] shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            ) : (
+              <span className="w-3 shrink-0" />
+            )}
+            
+            <span className={`font-mono text-[13px] truncate transition-all duration-150 ${isFolder ? 'text-[var(--text-secondary)]' : `${getFileColor(node.name)} group-hover:[text-shadow:0_0_8px_currentColor]`}`}>
+              {node.name}
+            </span>
+          </div>
+
+          {isFolder && node.children && (
+            <span 
+              className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono transition-colors duration-400 ${isFlashing ? 'bg-[rgba(113,112,255,0.2)] text-[var(--accent-bright)]' : 'bg-[rgba(255,255,255,0.03)] text-[var(--text-muted)]'}`}
             >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          ) : (
-            <span className="w-3 shrink-0" />
+              {node.children.length}
+            </span>
           )}
-          
-          <span className={`font-mono text-[13px] truncate ${isFolder ? 'text-[var(--text-secondary)]' : getFileColor(node.name)}`}>
-            {node.name}
-          </span>
         </div>
       </div>
 
-      {isFolder && isOpen && node.children && (
-        <TreeView tree={node.children} depth={depth + 1} activeLines={nextActiveLines} />
+      {isFolder && node.children && (
+        <div className={`overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+          <TreeView tree={node.children} depth={depth + 1} activeLines={nextActiveLines} />
+        </div>
       )}
     </div>
   );

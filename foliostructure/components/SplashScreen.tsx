@@ -24,10 +24,14 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           className="absolute w-[200px] h-[200px] rounded-full blur-[40px] animate-splash-glow"
           style={{ background: 'radial-gradient(circle, rgba(113,112,255,0.3) 0%, rgba(34,211,238,0.1) 50%, transparent 100%)' }}
         />
+        <div 
+          className="absolute w-[200px] h-[200px] rounded-full animate-[spin_3s_linear_infinite]"
+          style={{ background: 'conic-gradient(from 0deg, rgba(34,211,238,0.2), rgba(113,112,255,0.2), transparent, rgba(34,211,238,0.2))' }}
+        />
         
         {/* Logo */}
         <div className="relative z-10 animate-splash-logo mb-6">
-          <Logo className="w-16 h-16" />
+          <Logo className="w-16 h-16 splash-logo-svg" />
         </div>
         
         {/* Wordmark */}
@@ -60,6 +64,15 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
           opacity: 0;
           animation: splash-logo 700ms cubic-bezier(0.34, 1.56, 0.64, 1) 200ms forwards;
         }
+
+        /* SVG Stagger */
+        @keyframes svg-part-in {
+          0% { opacity: 0; transform: translateY(4px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .splash-logo-svg :global(.tree-trunk) { animation: svg-part-in 400ms ease-out 300ms both; }
+        .splash-logo-svg :global(.tree-branch) { animation: svg-part-in 400ms ease-out 450ms both; }
+        .splash-logo-svg :global(.tree-folder) { animation: svg-part-in 400ms ease-out 600ms both; }
 
         @keyframes splash-glow {
           0% { transform: scale(0); opacity: 0; }

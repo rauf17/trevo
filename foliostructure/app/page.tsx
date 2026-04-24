@@ -8,15 +8,47 @@ import SplashScreen from "@/components/SplashScreen";
 import Logo from "@/components/Logo";
 import { templates } from "@/data/templates";
 import { generateFullAsciiTree } from "@/utils/treeToAscii";
+import { calculateTreeStats } from "@/utils/treeStats";
+
+function CountUp({ end, duration = 600 }: { end: number, duration?: number }) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTimestamp: number;
+    const step = (timestamp: number) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      // easeOut cubic
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(easeOut * end));
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }, [end, duration]);
+
+  return <span>{count}</span>;
+}
 
 export default function Page() {
   const [showSplash, setShowSplash] = useState(true);
+  const [appReady, setAppReady] = useState(false);
   const [activeTemplateId, setActiveTemplateId] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [viewMode, setViewMode] = useState<"ide" | "ascii">("ide");
 
   const activeTemplate = templates.find(t => t.id === activeTemplateId);
+  const stats = activeTemplate ? calculateTreeStats(activeTemplate.tree) : null;
+
+  // Splash screen readiness
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAppReady(true);
+    }, 3600);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Template switch transition logic
   const handleSelectTemplate = (id: string) => {
@@ -25,7 +57,7 @@ export default function Page() {
     setTimeout(() => {
       setActiveTemplateId(id);
       setIsTransitioning(false);
-    }, 180); // Wait 180ms before switching content
+    }, 180);
   };
 
   // Mouse tracking for aurora background
@@ -44,12 +76,17 @@ export default function Page() {
 
       <div 
         className="flex flex-col h-screen w-full overflow-hidden text-primary relative transition-opacity duration-400 ease-in-out"
-        style={{ opacity: showSplash ? 0 : 1 }}
+        style={{ opacity: appReady ? 1 : 0 }}
       >
         {/* Dynamic Background */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[500px] w-full z-0" style={{ background: 'radial-gradient(ellipse 800px 500px at 50% -100px, rgba(94,106,210,0.07) 0%, transparent 70%)' }} />
-        <div className="pointer-events-none absolute bottom-0 right-0 h-[600px] w-[600px] z-0" style={{ background: 'radial-gradient(ellipse 600px 400px at 100% 100%, rgba(34,211,238,0.03) 0%, transparent 60%)' }} />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[500px] w-full z-0 animate-spotlight-breathe" style={{ background: 'radial-gradient(ellipse 800px 500px at 50% -100px, rgba(94,106,210,0.07) 0%, transparent 70%)' }} />
+        <div className="pointer-events-none absolute bottom-0 right-0 h-[600px] w-[600px] z-0 animate-spotlight-breathe" style={{ background: 'radial-gradient(ellipse 600px 400px at 100% 100%, rgba(34,211,238,0.03) 0%, transparent 60%)' }} />
         <div className="pointer-events-none fixed inset-0 z-0" style={{ background: 'radial-gradient(ellipse 1000px 600px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(94,106,210,0.04) 0%, transparent 60%)' }} />
+        
+        {/* 3 Drifting Orbs */}
+        <div className="fixed top-[10%] left-[10%] w-[400px] h-[400px] bg-[rgba(94,106,210,0.04)] rounded-full blur-[80px] pointer-events-none z-0 animate-orb-1" />
+        <div className="fixed bottom-[10%] right-[10%] w-[500px] h-[500px] bg-[rgba(34,211,238,0.03)] rounded-full blur-[80px] pointer-events-none z-0 animate-orb-2" />
+        <div className="fixed top-[40%] right-[20%] w-[350px] h-[350px] bg-[rgba(113,112,255,0.03)] rounded-full blur-[80px] pointer-events-none z-0 animate-orb-3" />
 
         {/* Top Navbar */}
         <header className="h-[48px] shrink-0 w-full bg-panel border-b border-[var(--border-subtle)] flex items-center justify-between px-4 z-20 relative">
@@ -74,7 +111,7 @@ export default function Page() {
                   {['T','r','e','v','o'].map((letter, i) => (
                     <span 
                       key={i} 
-                      className="inline-block transition-transform duration-200 ease-in-out group-hover:-translate-y-[3px]"
+                      className="inline-block transition-transform duration-200 ease-in-out group-hover:-translate-y-[3px] bg-[linear-gradient(90deg,#f7f8f8,#7170ff,#22d3ee,#f7f8f8)] bg-[length:300%_100%] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] animate-[gradientShift_4s_ease_infinite]"
                       style={{ transitionDelay: `${i * 50}ms` }}
                     >
                       {letter}
@@ -124,19 +161,48 @@ export default function Page() {
                 `}
               >
                 {/* Header Area */}
-                <div className="flex flex-col gap-3 pt-[48px] pb-[20px] border-b border-[var(--border-subtle)]">
+                <div className="flex flex-col gap-3 pt-[48px] pb-[20px] border-b border-[var(--border-subtle)] relative">
                   <div className="flex flex-wrap items-center gap-3">
-                    <span className="text-[32px] leading-none">{activeTemplate.icon}</span>
+                    <span 
+                      key={activeTemplate.id} 
+                      className={`text-[32px] leading-none ${isTransitioning ? '' : 'animate-emoji-bounce'}`}
+                    >
+                      {activeTemplate.icon}
+                    </span>
                     <h2 className="text-[20px] md:text-[24px] font-[510] tracking-[-0.288px] text-primary leading-tight">
                       {activeTemplate.name}
                     </h2>
-                    <span className="px-2 py-0.5 rounded-full border border-accent text-[10px] font-[510] text-accent uppercase tracking-wider ml-0 md:ml-2">
+                    <span 
+                      className="animate-border-slide px-2 py-0.5 rounded-full border border-transparent text-[10px] font-[510] text-accent uppercase tracking-wider ml-0 md:ml-2"
+                      style={{ 
+                        background: 'linear-gradient(#191a1b, #191a1b) padding-box, linear-gradient(90deg, var(--accent), #22d3ee, var(--accent)) border-box',
+                        backgroundSize: '200% 100%' 
+                      }}
+                    >
                       {activeTemplate.category}
                     </span>
                   </div>
                   <p className="text-[14px] md:text-[15px] font-normal text-muted max-w-2xl">
                     {activeTemplate.description}
                   </p>
+                  
+                  {/* Stats Bar */}
+                  {stats && (
+                    <div className="flex items-center gap-3 mt-2">
+                      <div className="group flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border border-[var(--border-default)] hover:border-[rgba(113,112,255,0.3)] transition-all hover:scale-105">
+                        <span className="text-[12px] text-subtle font-medium">Files:</span>
+                        <span className="text-[12px] text-primary font-[510]"><CountUp end={stats.files} /></span>
+                      </div>
+                      <div className="group flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border border-[var(--border-default)] hover:border-[rgba(113,112,255,0.3)] transition-all hover:scale-105">
+                        <span className="text-[12px] text-subtle font-medium">Folders:</span>
+                        <span className="text-[12px] text-primary font-[510]"><CountUp end={stats.folders} /></span>
+                      </div>
+                      <div className={`group flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border transition-all hover:scale-105 ${stats.depth <= 2 ? 'border-[#10b981] text-[#10b981]' : stats.depth <= 4 ? 'border-[#f59e0b] text-[#f59e0b]' : 'border-[#e06c75] text-[#e06c75]'}`}>
+                        <span className="text-[12px] opacity-80 font-medium">Depth:</span>
+                        <span className="text-[12px] font-[510]"><CountUp end={stats.depth} /></span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Toolbar */}
@@ -146,14 +212,21 @@ export default function Page() {
 
                 {/* Tree Area */}
                 <div className="min-h-[400px]">
-                  <div className="bg-surface rounded-[8px] p-[16px] md:p-[20px] shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] hover:shadow-[0_0_0_1px_rgba(113,112,255,0.15),0_4px_32px_rgba(94,106,210,0.08)] transition-shadow duration-300 ease-in-out min-h-[400px]">
-                    {viewMode === "ascii" ? (
-                      <pre className="font-mono text-[13px] leading-[1.8] text-secondary overflow-auto">
-                        {generateFullAsciiTree(activeTemplate.id, activeTemplate.tree)}
-                      </pre>
-                    ) : (
-                      <TreeView key={activeTemplate.id} tree={activeTemplate.tree} />
-                    )}
+                  <div className="relative overflow-hidden bg-surface rounded-[8px] shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] hover:shadow-[0_0_0_1px_rgba(113,112,255,0.15),0_4px_32px_rgba(94,106,210,0.08)] transition-shadow duration-300 ease-in-out min-h-[400px]">
+                    
+                    {/* Scan Line */}
+                    <div className="absolute top-0 left-0 w-full h-[2px] pointer-events-none z-10 animate-scan-line" 
+                         style={{ background: 'linear-gradient(90deg, transparent, rgba(113,112,255,0.15), transparent)' }} />
+
+                    <div className="p-[16px] md:p-[20px] h-full relative z-20">
+                      {viewMode === "ascii" ? (
+                        <pre className="font-mono text-[13px] leading-[1.8] text-secondary overflow-auto">
+                          {generateFullAsciiTree(activeTemplate.id, activeTemplate.tree)}
+                        </pre>
+                      ) : (
+                        <TreeView key={activeTemplate.id} tree={activeTemplate.tree} />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -183,6 +256,31 @@ export default function Page() {
         }
         .animate-fade-in {
           animation: fade-in 200ms ease-in-out forwards;
+        }
+
+        @keyframes gradientShift { 
+          0% { background-position: 0% 50% } 
+          50% { background-position: 100% 50% } 
+          100% { background-position: 0% 50% } 
+        }
+
+        @keyframes emoji-bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+          75% { transform: translateY(2px); }
+        }
+        .animate-emoji-bounce {
+          animation: emoji-bounce 400ms cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+        }
+
+        @keyframes scan-line {
+          0% { top: 0%; opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { top: 100%; opacity: 0; }
+        }
+        .animate-scan-line {
+          animation: scan-line 3s linear infinite;
         }
       `}</style>
     </>

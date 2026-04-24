@@ -79,6 +79,55 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 0;
+  animation: grid-crawl 20s linear infinite;
+}
+
+@keyframes grid-crawl {
+  0% { background-position: 0px 0px; }
+  100% { background-position: 40px 40px; }
+}
+
+@keyframes spotlight-breathe {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1.0; }
+}
+.animate-spotlight-breathe {
+  animation: spotlight-breathe 4s infinite ease-in-out;
+}
+
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(30px, -50px); }
+  66% { transform: translate(-20px, 20px); }
+}
+.animate-orb-1 {
+  animation: orb-drift-1 20s ease-in-out infinite;
+}
+
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(-40px, 30px); }
+  66% { transform: translate(20px, -40px); }
+}
+.animate-orb-2 {
+  animation: orb-drift-2 25s ease-in-out infinite;
+}
+
+@keyframes orb-drift-3 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(40px, 40px); }
+  66% { transform: translate(-30px, -30px); }
+}
+.animate-orb-3 {
+  animation: orb-drift-3 30s ease-in-out infinite;
+}
+
+@keyframes borderSlide { 
+  0% {background-position: 0% 0%} 
+  100% {background-position: 200% 0%} 
+}
+.animate-border-slide {
+  animation: borderSlide 2s linear infinite;
 }
 
 /* Particle Animations */

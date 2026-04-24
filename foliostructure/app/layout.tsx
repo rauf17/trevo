@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Particles from "@/components/Particles";
+import { ToastProvider } from "@/components/ToastProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -34,7 +35,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans" style={{ fontFeatureSettings: '"cv01", "ss03"' }}>
         <Particles />
-        {children}
+        <ToastProvider>
+          {children}
+        </ToastProvider>
       </body>
     </html>
   );

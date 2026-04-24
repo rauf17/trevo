@@ -12,18 +12,18 @@ export default function Logo({ className = "", style = {} }: { className?: strin
         </filter>
       </defs>
       {/* trunk */}
-      <line x1="14" y1="26" x2="14" y2="10" stroke="url(#treeGrad)" strokeWidth="1.5" filter="url(#glow)"/>
+      <line className="tree-trunk" x1="14" y1="26" x2="14" y2="10" stroke="url(#treeGrad)" strokeWidth="1.5" filter="url(#glow)"/>
       {/* branches */}
-      <line x1="14" y1="18" x2="7" y2="13" stroke="url(#treeGrad)" strokeWidth="1.5" filter="url(#glow)"/>
-      <line x1="14" y1="18" x2="21" y2="13" stroke="url(#treeGrad)" strokeWidth="1.5" filter="url(#glow)"/>
-      <line x1="14" y1="13" x2="10" y2="9" stroke="url(#treeGrad)" strokeWidth="1.2" filter="url(#glow)"/>
-      <line x1="14" y1="13" x2="18" y2="9" stroke="url(#treeGrad)" strokeWidth="1.2" filter="url(#glow)"/>
+      <line className="tree-branch" x1="14" y1="18" x2="7" y2="13" stroke="url(#treeGrad)" strokeWidth="1.5" filter="url(#glow)"/>
+      <line className="tree-branch" x1="14" y1="18" x2="21" y2="13" stroke="url(#treeGrad)" strokeWidth="1.5" filter="url(#glow)"/>
+      <line className="tree-branch" x1="14" y1="13" x2="10" y2="9" stroke="url(#treeGrad)" strokeWidth="1.2" filter="url(#glow)"/>
+      <line className="tree-branch" x1="14" y1="13" x2="18" y2="9" stroke="url(#treeGrad)" strokeWidth="1.2" filter="url(#glow)"/>
       {/* folder nodes */}
-      <rect x="11" y="7" width="6" height="4.5" rx="1" fill="url(#treeGrad)" opacity="0.9" filter="url(#glow)"/>
-      <rect x="4.5" y="11" width="5" height="4" rx="1" fill="url(#treeGrad)" opacity="0.8"/>
-      <rect x="18.5" y="11" width="5" height="4" rx="1" fill="url(#treeGrad)" opacity="0.8"/>
-      <rect x="7.5" y="7" width="4" height="3" rx="0.8" fill="url(#treeGrad)" opacity="0.6"/>
-      <rect x="16.5" y="7" width="4" height="3" rx="0.8" fill="url(#treeGrad)" opacity="0.6"/>
+      <rect className="tree-folder" x="11" y="7" width="6" height="4.5" rx="1" fill="url(#treeGrad)" opacity="0.9" filter="url(#glow)"/>
+      <rect className="tree-folder" x="4.5" y="11" width="5" height="4" rx="1" fill="url(#treeGrad)" opacity="0.8"/>
+      <rect className="tree-folder" x="18.5" y="11" width="5" height="4" rx="1" fill="url(#treeGrad)" opacity="0.8"/>
+      <rect className="tree-folder" x="7.5" y="7" width="4" height="3" rx="0.8" fill="url(#treeGrad)" opacity="0.6"/>
+      <rect className="tree-folder" x="16.5" y="7" width="4" height="3" rx="0.8" fill="url(#treeGrad)" opacity="0.6"/>
     </svg>
   );
 }
