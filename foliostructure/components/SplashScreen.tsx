@@ -41,7 +41,7 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
         
         {/* Tagline */}
         <p className="relative z-10 text-[13px] text-subtle mt-2 animate-splash-tagline">
-          folder structure generator
+          Folder Structure Generator
         </p>
 
         {/* Line */}

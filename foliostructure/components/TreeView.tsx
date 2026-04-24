@@ -12,7 +12,7 @@ const getFileColor = (name: string) => {
   return 'text-[var(--text-muted)]';
 };
 
-export default function TreeView({ tree, depth = 0, activeLines = [] }: { tree: TreeNode[], depth?: number, activeLines?: number[] }) {
+export default function TreeView({ tree, depth = 0, activeLines = [], searchQuery = "" }: { tree: TreeNode[], depth?: number, activeLines?: number[], searchQuery?: string }) {
   return (
     <div className="flex flex-col w-full">
       {depth === 0 && (
@@ -33,6 +33,7 @@ export default function TreeView({ tree, depth = 0, activeLines = [] }: { tree: 
             index={i} 
             isLast={isLast} 
             activeLines={activeLines}
+            searchQuery={searchQuery}
           />
         );
       })}
@@ -40,7 +41,16 @@ export default function TreeView({ tree, depth = 0, activeLines = [] }: { tree: 
   );
 }
 
-function TreeItem({ node, depth, index, isLast, activeLines }: { node: TreeNode, depth: number, index: number, isLast: boolean, activeLines: number[] }) {
+const hasMatch = (node: TreeNode, query: string): boolean => {
+  if (!query) return true;
+  if (node.name.toLowerCase().includes(query.toLowerCase())) return true;
+  if (node.children) {
+    return node.children.some(child => hasMatch(child, query));
+  }
+  return false;
+};
+
+function TreeItem({ node, depth, index, isLast, activeLines, searchQuery }: { node: TreeNode, depth: number, index: number, isLast: boolean, activeLines: number[], searchQuery: string }) {
   const [isOpen, setIsOpen] = useState(true);
   const [isFlashing, setIsFlashing] = useState(false);
   const isFolder = node.type === "folder";
@@ -65,10 +75,24 @@ function TreeItem({ node, depth, index, isLast, activeLines }: { node: TreeNode,
 
   const nextActiveLines = isLast ? activeLines : [...activeLines, depth];
 
+  const isMatch = hasMatch(node, searchQuery);
+  const showAsFaded = searchQuery && !isMatch;
+  const showAsHighlight = searchQuery && isMatch && node.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+  // Automatically open folders if they contain a match
+  useEffect(() => {
+    if (searchQuery && isMatch && isFolder) {
+      setIsOpen(true);
+    }
+  }, [searchQuery, isMatch, isFolder]);
+
   return (
     <div className="w-full">
       <div 
-        className="group w-full flex items-center relative hover:bg-[rgba(255,255,255,0.03)] bg-transparent cursor-pointer py-[5px] pr-2 rounded-sm transition-colors duration-800 hover:duration-0 border-l-[2px] border-transparent hover:border-[rgba(113,112,255,0.4)]"
+        className={`group w-full flex items-center relative hover:bg-[rgba(255,255,255,0.03)] cursor-pointer py-[5px] pr-2 rounded-sm transition-all duration-150 border-l-[2px] border-transparent hover:border-[rgba(113,112,255,0.4)]
+          ${showAsFaded ? 'opacity-20 blur-[1px]' : 'opacity-100 blur-0'}
+          ${showAsHighlight ? 'bg-[rgba(113,112,255,0.05)]' : 'bg-transparent'}
+        `}
         style={{ 
           paddingLeft: `${depth * 20 + 6}px`, 
           animation: 'tree-fade-in 200ms ease-out forwards',
@@ -127,7 +151,7 @@ function TreeItem({ node, depth, index, isLast, activeLines }: { node: TreeNode,
 
       {isFolder && node.children && (
         <div className={`overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
-          <TreeView tree={node.children} depth={depth + 1} activeLines={nextActiveLines} />
+          <TreeView tree={node.children} depth={depth + 1} activeLines={nextActiveLines} searchQuery={searchQuery} />
         </div>
       )}
     </div>

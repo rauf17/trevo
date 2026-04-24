@@ -4,7 +4,7 @@ export type TreeNode = {
   children?: TreeNode[];
 };
 
-export type TemplateCategory = "Frontend" | "Backend" | "Fullstack" | "Mobile" | "CLI" | "Monorepo";
+export type TemplateCategory = "Frontend" | "Backend" | "Fullstack" | "Mobile" | "CLI" | "Monorepo" | "Devops" | "Other";
 
 export interface Template {
   id: string;
@@ -871,4 +871,2191 @@ export const templates: Template[] = [
       { name: "README.md", type: "file" },
     ],
   },
+  , {
+    id: "python-data-science",
+    name: "Python Data Science",
+    description: "Tags: [\"Python\", \"Pandas\", \"Jupyter\"]",
+    icon: "🐼",
+    category: "Backend",
+    tree: [
+      {
+        name: "notebooks",
+        type: "folder",
+        children: [
+          {
+            name: "01_eda.ipynb",
+            type: "file"
+          },
+          {
+            name: "02_preprocessing.ipynb",
+            type: "file"
+          },
+          {
+            name: "03_modeling.ipynb",
+            type: "file"
+          },
+          {
+            name: "04_evaluation.ipynb",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "src",
+        type: "folder",
+        children: [
+          {
+            name: "data",
+            type: "folder",
+            children: [
+              {
+                name: "loader.py",
+                type: "file"
+              },
+              {
+                name: "cleaner.py",
+                type: "file"
+              },
+              {
+                name: "splitter.py",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "features",
+            type: "folder",
+            children: [
+              {
+                name: "engineer.py",
+                type: "file"
+              },
+              {
+                name: "selector.py",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "models",
+            type: "folder",
+            children: [
+              {
+                name: "baseline.py",
+                type: "file"
+              },
+              {
+                name: "trainer.py",
+                type: "file"
+              },
+              {
+                name: "evaluator.py",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "visualization",
+            type: "folder",
+            children: [
+              {
+                name: "plots.py",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "utils",
+            type: "folder",
+            children: [
+              {
+                name: "logger.py",
+                type: "file"
+              },
+              {
+                name: "config.py",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "data",
+        type: "folder",
+        children: [
+          {
+            name: "raw",
+            type: "folder",
+            children: [
+              {
+                name: ".gitkeep",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "processed",
+            type: "folder",
+            children: [
+              {
+                name: ".gitkeep",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "external",
+            type: "folder",
+            children: [
+              {
+                name: ".gitkeep",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "models",
+        type: "folder",
+        children: [
+          {
+            name: "saved",
+            type: "folder",
+            children: [
+              {
+                name: ".gitkeep",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "reports",
+        type: "folder",
+        children: [
+          {
+            name: "figures",
+            type: "folder",
+            children: [
+              {
+                name: ".gitkeep",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "requirements.txt",
+        type: "file"
+      },
+      {
+        name: "environment.yml",
+        type: "file"
+      },
+      {
+        name: ".env",
+        type: "file"
+      },
+      {
+        name: ".gitignore",
+        type: "file"
+      },
+      {
+        name: "README.md",
+        type: "file"
+      },
+      {
+        name: "setup.py",
+        type: "file"
+      },
+      {
+        name: "config.yaml",
+        type: "file"
+      },
+      {
+        name: "Makefile",
+        type: "file"
+      }
+    ]
+  },
+  {
+    id: "c-cmake-project",
+    name: "C++ CMake Project",
+    description: "Tags: [\"C++\", \"CMake\", \"GoogleTest\"]",
+    icon: "⚙️",
+    category: "Cli",
+    tree: [
+      {
+        name: "src",
+        type: "folder",
+        children: [
+          {
+            name: "main.cpp",
+            type: "file"
+          },
+          {
+            name: "core",
+            type: "folder",
+            children: [
+              {
+                name: "engine.cpp",
+                type: "file"
+              },
+              {
+                name: "engine.h",
+                type: "file"
+              },
+              {
+                name: "renderer.cpp",
+                type: "file"
+              },
+              {
+                name: "renderer.h",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "utils",
+            type: "folder",
+            children: [
+              {
+                name: "logger.cpp",
+                type: "file"
+              },
+              {
+                name: "logger.h",
+                type: "file"
+              },
+              {
+                name: "config.cpp",
+                type: "file"
+              },
+              {
+                name: "config.h",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "math",
+            type: "folder",
+            children: [
+              {
+                name: "vector3.h",
+                type: "file"
+              },
+              {
+                name: "matrix4.h",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "include",
+        type: "folder",
+        children: [
+          {
+            name: "core",
+            type: "folder",
+            children: [
+              {
+                name: "engine.h",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "utils",
+            type: "folder",
+            children: [
+              {
+                name: "logger.h",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "tests",
+        type: "folder",
+        children: [
+          {
+            name: "test_engine.cpp",
+            type: "file"
+          },
+          {
+            name: "test_utils.cpp",
+            type: "file"
+          },
+          {
+            name: "CMakeLists.txt",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "libs",
+        type: "folder",
+        children: [
+          {
+            name: ".gitkeep",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "build",
+        type: "folder",
+        children: [
+          {
+            name: ".gitkeep",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "CMakeLists.txt",
+        type: "file"
+      },
+      {
+        name: ".clang-format",
+        type: "file"
+      },
+      {
+        name: ".gitignore",
+        type: "file"
+      },
+      {
+        name: "README.md",
+        type: "file"
+      },
+      {
+        name: "Makefile",
+        type: "file"
+      },
+      {
+        name: "vcpkg.json",
+        type: "file"
+      },
+      {
+        name: ".github",
+        type: "folder",
+        children: [
+          {
+            name: "workflows",
+            type: "folder",
+            children: [
+              {
+                name: "cmake.yml",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "c-systems-project",
+    name: "C Systems Project",
+    description: "Tags: [\"C\", \"Make\", \"Valgrind\"]",
+    icon: "🔩",
+    category: "Cli",
+    tree: [
+      {
+        name: "src",
+        type: "folder",
+        children: [
+          {
+            name: "main.c",
+            type: "file"
+          },
+          {
+            name: "server",
+            type: "folder",
+            children: [
+              {
+                name: "server.c",
+                type: "file"
+              },
+              {
+                name: "server.h",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "client",
+            type: "folder",
+            children: [
+              {
+                name: "client.c",
+                type: "file"
+              },
+              {
+                name: "client.h",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "protocol",
+            type: "folder",
+            children: [
+              {
+                name: "protocol.c",
+                type: "file"
+              },
+              {
+                name: "protocol.h",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "utils",
+            type: "folder",
+            children: [
+              {
+                name: "memory.c",
+                type: "file"
+              },
+              {
+                name: "memory.h",
+                type: "file"
+              },
+              {
+                name: "logger.c",
+                type: "file"
+              },
+              {
+                name: "logger.h",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "data",
+            type: "folder",
+            children: [
+              {
+                name: "hashtable.c",
+                type: "file"
+              },
+              {
+                name: "hashtable.h",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "include",
+        type: "folder",
+        children: [
+          {
+            name: "common.h",
+            type: "file"
+          },
+          {
+            name: "types.h",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "tests",
+        type: "folder",
+        children: [
+          {
+            name: "test_server.c",
+            type: "file"
+          },
+          {
+            name: "test_protocol.c",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "scripts",
+        type: "folder",
+        children: [
+          {
+            name: "build.sh",
+            type: "file"
+          },
+          {
+            name: "test.sh",
+            type: "file"
+          },
+          {
+            name: "clean.sh",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "Makefile",
+        type: "file"
+      },
+      {
+        name: ".gitignore",
+        type: "file"
+      },
+      {
+        name: "README.md",
+        type: "file"
+      },
+      {
+        name: "valgrind.supp",
+        type: "file"
+      },
+      {
+        name: "docs",
+        type: "folder",
+        children: [
+          {
+            name: "architecture.md",
+            type: "file"
+          },
+          {
+            name: "api.md",
+            type: "file"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "go-rest-api",
+    name: "Go REST API",
+    description: "Tags: [\"Go\", \"Gin\", \"PostgreSQL\"]",
+    icon: "🐹",
+    category: "Backend",
+    tree: [
+      {
+        name: "cmd",
+        type: "folder",
+        children: [
+          {
+            name: "server",
+            type: "folder",
+            children: [
+              {
+                name: "main.go",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "migrate",
+            type: "folder",
+            children: [
+              {
+                name: "main.go",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "internal",
+        type: "folder",
+        children: [
+          {
+            name: "api",
+            type: "folder",
+            children: [
+              {
+                name: "router.go",
+                type: "file"
+              },
+              {
+                name: "middleware",
+                type: "folder",
+                children: [
+                  {
+                    name: "auth.go",
+                    type: "file"
+                  },
+                  {
+                    name: "logger.go",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "handlers",
+                type: "folder",
+                children: [
+                  {
+                    name: "user.go",
+                    type: "file"
+                  },
+                  {
+                    name: "auth.go",
+                    type: "file"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "domain",
+            type: "folder",
+            children: [
+              {
+                name: "user.go",
+                type: "file"
+              },
+              {
+                name: "repository.go",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "service",
+            type: "folder",
+            children: [
+              {
+                name: "user_service.go",
+                type: "file"
+              },
+              {
+                name: "auth_service.go",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "repository",
+            type: "folder",
+            children: [
+              {
+                name: "postgres",
+                type: "folder",
+                children: [
+                  {
+                    name: "user_repo.go",
+                    type: "file"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "config",
+            type: "folder",
+            children: [
+              {
+                name: "config.go",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "database",
+            type: "folder",
+            children: [
+              {
+                name: "db.go",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "pkg",
+        type: "folder",
+        children: [
+          {
+            name: "jwt",
+            type: "folder",
+            children: [
+              {
+                name: "jwt.go",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "hash",
+            type: "folder",
+            children: [
+              {
+                name: "bcrypt.go",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "validator",
+            type: "folder",
+            children: [
+              {
+                name: "validator.go",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "migrations",
+        type: "folder",
+        children: [
+          {
+            name: "001_create_users.up.sql",
+            type: "file"
+          },
+          {
+            name: "001_create_users.down.sql",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "tests",
+        type: "folder",
+        children: [
+          {
+            name: "integration",
+            type: "folder",
+            children: [
+              {
+                name: "user_test.go",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "unit",
+            type: "folder",
+            children: [
+              {
+                name: "service_test.go",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "go.mod",
+        type: "file"
+      },
+      {
+        name: "go.sum",
+        type: "file"
+      },
+      {
+        name: "Makefile",
+        type: "file"
+      },
+      {
+        name: "Dockerfile",
+        type: "file"
+      },
+      {
+        name: ".env",
+        type: "file"
+      },
+      {
+        name: ".gitignore",
+        type: "file"
+      },
+      {
+        name: "README.md",
+        type: "file"
+      }
+    ]
+  },
+  {
+    id: "java-spring-boot",
+    name: "Java Spring Boot",
+    description: "Tags: [\"Spring Boot\", \"Maven\", \"JPA\"]",
+    icon: "☕",
+    category: "Backend",
+    tree: [
+      {
+        name: "src",
+        type: "folder",
+        children: [
+          {
+            name: "main",
+            type: "folder",
+            children: [
+              {
+                name: "java",
+                type: "folder",
+                children: [
+                  {
+                    name: "com",
+                    type: "folder",
+                    children: [
+                      {
+                        name: "app",
+                        type: "folder",
+                        children: [
+                          {
+                            name: "Application.java",
+                            type: "file"
+                          },
+                          {
+                            name: "controller",
+                            type: "folder",
+                            children: [
+                              {
+                                name: "UserController.java",
+                                type: "file"
+                              },
+                              {
+                                name: "AuthController.java",
+                                type: "file"
+                              }
+                            ]
+                          },
+                          {
+                            name: "service",
+                            type: "folder",
+                            children: [
+                              {
+                                name: "UserService.java",
+                                type: "file"
+                              },
+                              {
+                                name: "AuthService.java",
+                                type: "file"
+                              }
+                            ]
+                          },
+                          {
+                            name: "repository",
+                            type: "folder",
+                            children: [
+                              {
+                                name: "UserRepository.java",
+                                type: "file"
+                              }
+                            ]
+                          },
+                          {
+                            name: "model",
+                            type: "folder",
+                            children: [
+                              {
+                                name: "User.java",
+                                type: "file"
+                              },
+                              {
+                                name: "Role.java",
+                                type: "file"
+                              }
+                            ]
+                          },
+                          {
+                            name: "dto",
+                            type: "folder",
+                            children: [
+                              {
+                                name: "UserDTO.java",
+                                type: "file"
+                              }
+                            ]
+                          },
+                          {
+                            name: "config",
+                            type: "folder",
+                            children: [
+                              {
+                                name: "SecurityConfig.java",
+                                type: "file"
+                              },
+                              {
+                                name: "JwtConfig.java",
+                                type: "file"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "resources",
+                type: "folder",
+                children: [
+                  {
+                    name: "application.yml",
+                    type: "file"
+                  },
+                  {
+                    name: "application-dev.yml",
+                    type: "file"
+                  },
+                  {
+                    name: "db",
+                    type: "folder",
+                    children: [
+                      {
+                        name: "migration",
+                        type: "folder",
+                        children: [
+                          {
+                            name: "V1__create_users.sql",
+                            type: "file"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "test",
+            type: "folder",
+            children: [
+              {
+                name: "java",
+                type: "folder",
+                children: [
+                  {
+                    name: "com",
+                    type: "folder",
+                    children: [
+                      {
+                        name: "app",
+                        type: "folder",
+                        children: [
+                          {
+                            name: "UserControllerTest.java",
+                            type: "file"
+                          },
+                          {
+                            name: "UserServiceTest.java",
+                            type: "file"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "pom.xml",
+        type: "file"
+      },
+      {
+        name: "Dockerfile",
+        type: "file"
+      },
+      {
+        name: "docker-compose.yml",
+        type: "file"
+      },
+      {
+        name: ".gitignore",
+        type: "file"
+      },
+      {
+        name: "README.md",
+        type: "file"
+      },
+      {
+        name: "Makefile",
+        type: "file"
+      }
+    ]
+  },
+  {
+    id: "php-laravel",
+    name: "PHP Laravel",
+    description: "Tags: [\"Laravel\", \"MySQL\", \"Blade\"]",
+    icon: "🐘",
+    category: "Fullstack",
+    tree: [
+      {
+        name: "app",
+        type: "folder",
+        children: [
+          {
+            name: "Http",
+            type: "folder",
+            children: [
+              {
+                name: "Controllers",
+                type: "folder",
+                children: [
+                  {
+                    name: "UserController.php",
+                    type: "file"
+                  },
+                  {
+                    name: "AuthController.php",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "Middleware",
+                type: "folder",
+                children: [
+                  {
+                    name: "Authenticate.php",
+                    type: "file"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "Models",
+            type: "folder",
+            children: [
+              {
+                name: "User.php",
+                type: "file"
+              },
+              {
+                name: "Post.php",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "Providers",
+            type: "folder",
+            children: [
+              {
+                name: "AppServiceProvider.php",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "database",
+        type: "folder",
+        children: [
+          {
+            name: "migrations",
+            type: "folder",
+            children: [
+              {
+                name: "2024_01_01_create_users_table.php",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "seeders",
+            type: "folder",
+            children: [
+              {
+                name: "UserSeeder.php",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "factories",
+            type: "folder",
+            children: [
+              {
+                name: "UserFactory.php",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "resources",
+        type: "folder",
+        children: [
+          {
+            name: "views",
+            type: "folder",
+            children: [
+              {
+                name: "layouts",
+                type: "folder",
+                children: [
+                  {
+                    name: "app.blade.php",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "auth",
+                type: "folder",
+                children: [
+                  {
+                    name: "login.blade.php",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "dashboard",
+                type: "folder",
+                children: [
+                  {
+                    name: "index.blade.php",
+                    type: "file"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "css",
+            type: "folder",
+            children: [
+              {
+                name: "app.css",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "js",
+            type: "folder",
+            children: [
+              {
+                name: "app.js",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "routes",
+        type: "folder",
+        children: [
+          {
+            name: "web.php",
+            type: "file"
+          },
+          {
+            name: "api.php",
+            type: "file"
+          },
+          {
+            name: "auth.php",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "tests",
+        type: "folder",
+        children: [
+          {
+            name: "Feature",
+            type: "folder",
+            children: [
+              {
+                name: "AuthTest.php",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "Unit",
+            type: "folder",
+            children: [
+              {
+                name: "UserTest.php",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "config",
+        type: "folder",
+        children: [
+          {
+            name: "app.php",
+            type: "file"
+          },
+          {
+            name: "database.php",
+            type: "file"
+          },
+          {
+            name: "auth.php",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: ".env",
+        type: "file"
+      },
+      {
+        name: ".env.example",
+        type: "file"
+      },
+      {
+        name: "composer.json",
+        type: "file"
+      },
+      {
+        name: "package.json",
+        type: "file"
+      },
+      {
+        name: "artisan",
+        type: "file"
+      },
+      {
+        name: ".gitignore",
+        type: "file"
+      },
+      {
+        name: "README.md",
+        type: "file"
+      }
+    ]
+  },
+  {
+    id: "electron-desktop-app",
+    name: "Electron Desktop App",
+    description: "Tags: [\"Electron\", \"React\", \"TypeScript\"]",
+    icon: "🖥️",
+    category: "Frontend",
+    tree: [
+      {
+        name: "src",
+        type: "folder",
+        children: [
+          {
+            name: "main",
+            type: "folder",
+            children: [
+              {
+                name: "main.ts",
+                type: "file"
+              },
+              {
+                name: "preload.ts",
+                type: "file"
+              },
+              {
+                name: "menu.ts",
+                type: "file"
+              },
+              {
+                name: "ipc",
+                type: "folder",
+                children: [
+                  {
+                    name: "handlers.ts",
+                    type: "file"
+                  },
+                  {
+                    name: "channels.ts",
+                    type: "file"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "renderer",
+            type: "folder",
+            children: [
+              {
+                name: "index.tsx",
+                type: "file"
+              },
+              {
+                name: "App.tsx",
+                type: "file"
+              },
+              {
+                name: "pages",
+                type: "folder",
+                children: [
+                  {
+                    name: "Home.tsx",
+                    type: "file"
+                  },
+                  {
+                    name: "Settings.tsx",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "components",
+                type: "folder",
+                children: [
+                  {
+                    name: "Titlebar.tsx",
+                    type: "file"
+                  },
+                  {
+                    name: "Sidebar.tsx",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "hooks",
+                type: "folder",
+                children: [
+                  {
+                    name: "useElectron.ts",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "store",
+                type: "folder",
+                children: [
+                  {
+                    name: "app.ts",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "styles",
+                type: "folder",
+                children: [
+                  {
+                    name: "global.css",
+                    type: "file"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "shared",
+            type: "folder",
+            children: [
+              {
+                name: "types.ts",
+                type: "file"
+              },
+              {
+                name: "constants.ts",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "assets",
+        type: "folder",
+        children: [
+          {
+            name: "icon.png",
+            type: "file"
+          },
+          {
+            name: "icon.ico",
+            type: "file"
+          },
+          {
+            name: "icon.icns",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "forge.config.ts",
+        type: "file"
+      },
+      {
+        name: "webpack.main.config.ts",
+        type: "file"
+      },
+      {
+        name: "webpack.renderer.config.ts",
+        type: "file"
+      },
+      {
+        name: "tsconfig.json",
+        type: "file"
+      },
+      {
+        name: "package.json",
+        type: "file"
+      },
+      {
+        name: ".gitignore",
+        type: "file"
+      },
+      {
+        name: "README.md",
+        type: "file"
+      }
+    ]
+  },
+  {
+    id: "graphql-api",
+    name: "GraphQL API",
+    description: "Tags: [\"GraphQL\", \"Apollo\", \"Prisma\"]",
+    icon: "◈",
+    category: "Backend",
+    tree: [
+      {
+        name: "src",
+        type: "folder",
+        children: [
+          {
+            name: "index.ts",
+            type: "file"
+          },
+          {
+            name: "server.ts",
+            type: "file"
+          },
+          {
+            name: "schema",
+            type: "folder",
+            children: [
+              {
+                name: "typeDefs.ts",
+                type: "file"
+              },
+              {
+                name: "resolvers.ts",
+                type: "file"
+              },
+              {
+                name: "types",
+                type: "folder",
+                children: [
+                  {
+                    name: "user.ts",
+                    type: "file"
+                  },
+                  {
+                    name: "post.ts",
+                    type: "file"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "resolvers",
+            type: "folder",
+            children: [
+              {
+                name: "userResolver.ts",
+                type: "file"
+              },
+              {
+                name: "postResolver.ts",
+                type: "file"
+              },
+              {
+                name: "authResolver.ts",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "middleware",
+            type: "folder",
+            children: [
+              {
+                name: "auth.ts",
+                type: "file"
+              },
+              {
+                name: "rateLimit.ts",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "datasources",
+            type: "folder",
+            children: [
+              {
+                name: "userAPI.ts",
+                type: "file"
+              },
+              {
+                name: "postAPI.ts",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "utils",
+            type: "folder",
+            children: [
+              {
+                name: "jwt.ts",
+                type: "file"
+              },
+              {
+                name: "bcrypt.ts",
+                type: "file"
+              },
+              {
+                name: "logger.ts",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "types",
+            type: "folder",
+            children: [
+              {
+                name: "context.ts",
+                type: "file"
+              },
+              {
+                name: "generated.ts",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "prisma",
+        type: "folder",
+        children: [
+          {
+            name: "schema.prisma",
+            type: "file"
+          },
+          {
+            name: "seed.ts",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "tests",
+        type: "folder",
+        children: [
+          {
+            name: "resolvers",
+            type: "folder",
+            children: [
+              {
+                name: "user.test.ts",
+                type: "file"
+              },
+              {
+                name: "auth.test.ts",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: ".env",
+        type: "file"
+      },
+      {
+        name: ".env.example",
+        type: "file"
+      },
+      {
+        name: "tsconfig.json",
+        type: "file"
+      },
+      {
+        name: "package.json",
+        type: "file"
+      },
+      {
+        name: "codegen.ts",
+        type: "file"
+      },
+      {
+        name: ".gitignore",
+        type: "file"
+      },
+      {
+        name: "README.md",
+        type: "file"
+      }
+    ]
+  },
+  {
+    id: "unity-game-project",
+    name: "Unity Game Project",
+    description: "Tags: [\"Unity\", \"C#\", \"HLSL\"]",
+    icon: "🎮",
+    category: "Other",
+    tree: [
+      {
+        name: "Assets",
+        type: "folder",
+        children: [
+          {
+            name: "Scripts",
+            type: "folder",
+            children: [
+              {
+                name: "GameManager.cs",
+                type: "file"
+              },
+              {
+                name: "Player",
+                type: "folder",
+                children: [
+                  {
+                    name: "PlayerController.cs",
+                    type: "file"
+                  },
+                  {
+                    name: "PlayerHealth.cs",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "Enemy",
+                type: "folder",
+                children: [
+                  {
+                    name: "EnemyAI.cs",
+                    type: "file"
+                  },
+                  {
+                    name: "EnemySpawner.cs",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "UI",
+                type: "folder",
+                children: [
+                  {
+                    name: "MainMenuUI.cs",
+                    type: "file"
+                  },
+                  {
+                    name: "HUDController.cs",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "Managers",
+                type: "folder",
+                children: [
+                  {
+                    name: "AudioManager.cs",
+                    type: "file"
+                  },
+                  {
+                    name: "SceneLoader.cs",
+                    type: "file"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "Scenes",
+            type: "folder",
+            children: [
+              {
+                name: "MainMenu.unity",
+                type: "file"
+              },
+              {
+                name: "GameScene.unity",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "Prefabs",
+            type: "folder",
+            children: [
+              {
+                name: ".gitkeep",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "Materials",
+            type: "folder",
+            children: [
+              {
+                name: "Player.mat",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "Shaders",
+            type: "folder",
+            children: [
+              {
+                name: "CustomLit.hlsl",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "Audio",
+            type: "folder",
+            children: [
+              {
+                name: "SFX",
+                type: "folder",
+                children: [
+                  {
+                    name: ".gitkeep",
+                    type: "file"
+                  }
+                ]
+              },
+              {
+                name: "Music",
+                type: "folder",
+                children: [
+                  {
+                    name: ".gitkeep",
+                    type: "file"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Packages",
+        type: "folder",
+        children: [
+          {
+            name: "manifest.json",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "ProjectSettings",
+        type: "folder",
+        children: [
+          {
+            name: "ProjectSettings.asset",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: ".gitignore",
+        type: "file"
+      },
+      {
+        name: "README.md",
+        type: "file"
+      }
+    ]
+  },
+  {
+    id: "kubernetes-helm",
+    name: "Kubernetes + Helm",
+    description: "Tags: [\"Kubernetes\", \"Helm\", \"ArgoCD\"]",
+    icon: "☸️",
+    category: "Devops",
+    tree: [
+      {
+        name: "helm",
+        type: "folder",
+        children: [
+          {
+            name: "myapp",
+            type: "folder",
+            children: [
+              {
+                name: "Chart.yaml",
+                type: "file"
+              },
+              {
+                name: "values.yaml",
+                type: "file"
+              },
+              {
+                name: "values-prod.yaml",
+                type: "file"
+              },
+              {
+                name: "values-staging.yaml",
+                type: "file"
+              },
+              {
+                name: "templates",
+                type: "folder",
+                children: [
+                  {
+                    name: "deployment.yaml",
+                    type: "file"
+                  },
+                  {
+                    name: "service.yaml",
+                    type: "file"
+                  },
+                  {
+                    name: "ingress.yaml",
+                    type: "file"
+                  },
+                  {
+                    name: "configmap.yaml",
+                    type: "file"
+                  },
+                  {
+                    name: "hpa.yaml",
+                    type: "file"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "k8s",
+        type: "folder",
+        children: [
+          {
+            name: "namespaces.yaml",
+            type: "file"
+          },
+          {
+            name: "secrets.yaml",
+            type: "file"
+          },
+          {
+            name: "pvc.yaml",
+            type: "file"
+          },
+          {
+            name: "network-policy.yaml",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "argocd",
+        type: "folder",
+        children: [
+          {
+            name: "application.yaml",
+            type: "file"
+          },
+          {
+            name: "project.yaml",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "scripts",
+        type: "folder",
+        children: [
+          {
+            name: "deploy.sh",
+            type: "file"
+          },
+          {
+            name: "rollback.sh",
+            type: "file"
+          },
+          {
+            name: "port-forward.sh",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "monitoring",
+        type: "folder",
+        children: [
+          {
+            name: "alerts.yaml",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: ".github",
+        type: "folder",
+        children: [
+          {
+            name: "workflows",
+            type: "folder",
+            children: [
+              {
+                name: "deploy.yml",
+                type: "file"
+              },
+              {
+                name: "validate.yml",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Makefile",
+        type: "file"
+      },
+      {
+        name: ".gitignore",
+        type: "file"
+      },
+      {
+        name: "README.md",
+        type: "file"
+      }
+    ]
+  },
+  {
+    id: "react-native-expo",
+    name: "React Native + Expo",
+    description: "Tags: [\"Expo\", \"NativeWind\", \"Zustand\"]",
+    icon: "📱",
+    category: "Mobile",
+    tree: [
+      {
+        name: "app",
+        type: "folder",
+        children: [
+          {
+            name: "(tabs)",
+            type: "folder",
+            children: [
+              {
+                name: "index.tsx",
+                type: "file"
+              },
+              {
+                name: "explore.tsx",
+                type: "file"
+              },
+              {
+                name: "_layout.tsx",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "_layout.tsx",
+            type: "file"
+          },
+          {
+            name: "auth",
+            type: "folder",
+            children: [
+              {
+                name: "login.tsx",
+                type: "file"
+              },
+              {
+                name: "register.tsx",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "modal.tsx",
+            type: "file"
+          },
+          {
+            name: "+not-found.tsx",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "components",
+        type: "folder",
+        children: [
+          {
+            name: "ui",
+            type: "folder",
+            children: [
+              {
+                name: "Button.tsx",
+                type: "file"
+              },
+              {
+                name: "Input.tsx",
+                type: "file"
+              },
+              {
+                name: "Card.tsx",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "ThemedText.tsx",
+            type: "file"
+          },
+          {
+            name: "ThemedView.tsx",
+            type: "file"
+          },
+          {
+            name: "ParallaxScrollView.tsx",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "hooks",
+        type: "folder",
+        children: [
+          {
+            name: "useColorScheme.ts",
+            type: "file"
+          },
+          {
+            name: "useThemeColor.ts",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "stores",
+        type: "folder",
+        children: [
+          {
+            name: "auth.ts",
+            type: "file"
+          },
+          {
+            name: "user.ts",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "services",
+        type: "folder",
+        children: [
+          {
+            name: "api.ts",
+            type: "file"
+          },
+          {
+            name: "auth.ts",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "constants",
+        type: "folder",
+        children: [
+          {
+            name: "Colors.ts",
+            type: "file"
+          },
+          {
+            name: "Layout.ts",
+            type: "file"
+          }
+        ]
+      },
+      {
+        name: "assets",
+        type: "folder",
+        children: [
+          {
+            name: "fonts",
+            type: "folder",
+            children: [
+              {
+                name: "SpaceMono-Regular.ttf",
+                type: "file"
+              }
+            ]
+          },
+          {
+            name: "images",
+            type: "folder",
+            children: [
+              {
+                name: "icon.png",
+                type: "file"
+              },
+              {
+                name: "splash.png",
+                type: "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        name: "app.json",
+        type: "file"
+      },
+      {
+        name: "babel.config.js",
+        type: "file"
+      },
+      {
+        name: "tsconfig.json",
+        type: "file"
+      },
+      {
+        name: "package.json",
+        type: "file"
+      },
+      {
+        name: ".gitignore",
+        type: "file"
+      },
+      {
+        name: "README.md",
+        type: "file"
+      }
+    ]
+  }
 ];

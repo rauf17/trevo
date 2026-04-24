@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { templates } from "../data/templates";
+import { templates, Template } from "../data/templates";
 import TemplateCard from "./TemplateCard";
 
-const CATEGORIES = ["All", "Frontend", "Backend", "Fullstack", "Mobile", "CLI", "Monorepo"];
+const CATEGORIES = ["All", "Frontend", "Backend", "Fullstack", "Mobile", "CLI", "Devops", "Other"];
 
 type SidebarProps = {
   activeTemplateId: string | null;
@@ -20,6 +20,12 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
   const [isPoofing, setIsPoofing] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
+  const [isFiltering, setIsFiltering] = useState(false);
+  const [isScrolledToBottom, setIsScrolledToBottom] = useState(false);
+  
+  const [hoveredTemplate, setHoveredTemplate] = useState<Template | null>(null);
+  const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
+  const [previewTop, setPreviewTop] = useState(0);
 
   const filteredTemplates = templates.filter(t => {
     const matchesCategory = activeCategory === "All" || t.category.toLowerCase() === activeCategory.toLowerCase();
@@ -32,6 +38,29 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
   useEffect(() => {
     setFocusedIndex(-1);
   }, [searchQuery, activeCategory]);
+
+  const handleCategorySwitch = (category: string) => {
+    if (category === activeCategory) return;
+    setIsFiltering(true);
+    setTimeout(() => {
+      setActiveCategory(category);
+      setIsFiltering(false);
+    }, 150);
+  };
+
+  const handleMouseEnter = (template: Template, e: React.MouseEvent) => {
+    const top = e.currentTarget.getBoundingClientRect().top;
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    hoverTimeout.current = setTimeout(() => {
+      setHoveredTemplate(template);
+      setPreviewTop(top);
+    }, 800);
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimeout.current) clearTimeout(hoverTimeout.current);
+    setHoveredTemplate(null);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (filteredTemplates.length === 0) return;
@@ -134,7 +163,7 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
           {CATEGORIES.map(category => (
             <button
               key={category}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => handleCategorySwitch(category)}
               className={`px-2.5 py-0.5 rounded-full border text-[12px] font-[510] transition-all active:scale-95 duration-150
                 ${activeCategory === category 
                   ? 'bg-accent border-accent text-white' 
@@ -147,49 +176,97 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
         </div>
 
         {/* Templates List */}
-        <div 
-          className="flex-1 overflow-y-auto p-2 space-y-0.5 outline-none"
-          tabIndex={0}
-          onKeyDown={handleKeyDown}
-          ref={listRef}
-        >
-          {filteredTemplates.length > 0 ? (
-            filteredTemplates.map((template, index) => (
-              <div 
-                key={template.id} 
-                onMouseEnter={() => setFocusedIndex(index)}
-                className={!showSplash ? "animate-sidebar-card" : "opacity-0"}
-                style={{ 
-                  animationDelay: !showSplash ? `${index * 60}ms` : '0ms',
-                  animationFillMode: 'forwards'
-                }}
-              >
-                <TemplateCard 
-                  template={template} 
-                  isActive={activeTemplateId === template.id}
-                  isFocused={index === focusedIndex}
-                  onClick={() => {
-                    onSelectTemplate(template.id);
-                    if (window.innerWidth < 768) onCloseMobile();
+        <div className="flex-1 relative flex flex-col overflow-hidden">
+          <div 
+            className="flex-1 overflow-y-auto p-2 space-y-0.5 outline-none"
+            tabIndex={0}
+            onKeyDown={handleKeyDown}
+            ref={listRef}
+            onScroll={(e) => {
+              const el = e.currentTarget;
+              setIsScrolledToBottom(Math.abs(el.scrollHeight - el.scrollTop - el.clientHeight) < 10);
+            }}
+          >
+            {filteredTemplates.length > 0 ? (
+              filteredTemplates.map((template, index) => (
+                <div 
+                  key={template.id} 
+                  onMouseEnter={(e) => {
+                    setFocusedIndex(index);
+                    handleMouseEnter(template, e);
                   }}
-                />
+                  onMouseLeave={handleMouseLeave}
+                  className={isFiltering ? "animate-category-out" : (!showSplash ? "animate-category-in" : "opacity-100")}
+                  style={{ 
+                    animationDelay: isFiltering ? `${index * 15}ms` : (!showSplash ? `${index * 60}ms` : '0ms'),
+                    animationFillMode: 'forwards'
+                  }}
+                >
+                  <TemplateCard 
+                    template={template} 
+                    isActive={activeTemplateId === template.id}
+                    isFocused={index === focusedIndex}
+                    onClick={() => {
+                      onSelectTemplate(template.id);
+                      handleMouseLeave();
+                      if (window.innerWidth < 768) onCloseMobile();
+                    }}
+                  />
+                </div>
+              ))
+            ) : (
+              <div className="p-6 text-center text-[13px] text-muted animate-shake">
+                No files found
               </div>
-            ))
-          ) : (
-            <div className="p-6 text-center text-[13px] text-muted animate-shake">
-              No files found
-            </div>
-          )}
+            )}
+          </div>
+          <div className={`absolute bottom-0 left-0 right-0 h-[60px] bg-[linear-gradient(transparent,var(--bg-panel))] pointer-events-none z-10 transition-opacity duration-300 ${isScrolledToBottom ? 'opacity-0' : 'opacity-100'}`} />
         </div>
       </aside>
+
+      {/* Floating Preview Tooltip */}
+      {hoveredTemplate && (
+        <div 
+          className="hidden md:block fixed left-[324px] z-[60] bg-[#191a1b] border border-[rgba(255,255,255,0.08)] rounded-[10px] p-3 w-[200px] shadow-[0_8px_32px_rgba(0,0,0,0.5)] animate-preview-in pointer-events-none"
+          style={{ top: Math.min(previewTop, window.innerHeight - 150) + 'px' }}
+        >
+          <div className="text-[13px] font-[510] text-primary mb-1 truncate">{hoveredTemplate.name}</div>
+          <div className="text-[11px] text-muted mb-2">
+            {hoveredTemplate.tree.filter(n => n.type === 'file').length} files, {hoveredTemplate.tree.filter(n => n.type === 'folder').length} folders
+          </div>
+          <div className="text-[11px] font-mono text-subtle flex flex-col gap-0.5">
+            {hoveredTemplate.tree.slice(0, 5).map((node, i) => (
+              <div key={i} className="truncate">{node.type === 'folder' ? '📁' : '📄'} {node.name}</div>
+            ))}
+            {hoveredTemplate.tree.length > 5 && <div className="mt-0.5 text-[10px] opacity-60">...</div>}
+          </div>
+        </div>
+      )}
+
       <style jsx>{`
-        @keyframes sidebar-card {
-          0% { opacity: 0; transform: translateX(-12px); }
+        @keyframes category-in {
+          0% { opacity: 0; transform: translateY(4px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-category-in {
+          opacity: 0;
+          animation: category-in 200ms ease-out forwards;
+        }
+
+        @keyframes category-out {
+          0% { opacity: 1; transform: translateY(0); }
+          100% { opacity: 0; transform: translateY(-4px); }
+        }
+        .animate-category-out {
+          animation: category-out 150ms ease-in forwards;
+        }
+
+        @keyframes preview-in {
+          0% { opacity: 0; transform: translateX(-8px); }
           100% { opacity: 1; transform: translateX(0); }
         }
-        .animate-sidebar-card {
-          opacity: 0;
-          animation: sidebar-card 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .animate-preview-in {
+          animation: preview-in 200ms ease-out forwards;
         }
 
         @keyframes poof {

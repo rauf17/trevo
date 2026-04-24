@@ -9,9 +9,11 @@ type ToolbarProps = {
   template: Template;
   viewMode: "ide" | "ascii";
   setViewMode: (mode: "ide" | "ascii") => void;
+  treeSearchQuery: string;
+  setTreeSearchQuery: (query: string) => void;
 };
 
-export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProps) {
+export default function Toolbar({ template, viewMode, setViewMode, treeSearchQuery, setTreeSearchQuery }: ToolbarProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const { addToast } = useToast();
 
@@ -110,6 +112,27 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
           {isExpanded ? "Collapse All" : "Expand All"}
         </button>
       </div>
+
+      {/* Tree Search Input */}
+      {viewMode === "ide" && (
+        <div className="flex-1 max-w-[200px] ml-4 animate-toolbar-btn" style={{ animationDelay: '200ms' }}>
+          <div className="relative flex items-center w-full">
+            <div className="absolute left-2.5 text-subtle pointer-events-none">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </div>
+            <input
+              type="text"
+              placeholder="Search files..."
+              value={treeSearchQuery}
+              onChange={(e) => setTreeSearchQuery(e.target.value)}
+              className="w-full bg-[rgba(255,255,255,0.02)] border border-[var(--border-default)] rounded-[6px] pl-7 pr-3 py-1.5 text-[12px] text-primary placeholder-[var(--text-subtle)] outline-none focus:border-[rgba(113,112,255,0.4)] focus:shadow-[0_0_0_3px_rgba(113,112,255,0.1)] focus:bg-[rgba(255,255,255,0.04)] transition-all"
+            />
+          </div>
+        </div>
+      )}
 
       {/* View Switcher */}
       <div className="ml-auto flex items-center gap-1 bg-[rgba(255,255,255,0.02)] border border-[var(--border-default)] p-1 rounded-[8px] animate-toolbar-btn" style={{ animationDelay: '240ms' }}>
