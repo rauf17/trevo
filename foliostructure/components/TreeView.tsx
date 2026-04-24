@@ -18,8 +18,8 @@ export default function TreeView({ tree, depth = 0, activeLines = [] }: { tree: 
       {depth === 0 && (
         <style dangerouslySetInnerHTML={{__html: `
           @keyframes tree-fade-in {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
           }
         `}} />
       )}
@@ -57,12 +57,12 @@ function TreeItem({ node, depth, index, isLast, activeLines }: { node: TreeNode,
   return (
     <div className="w-full">
       <div 
-        className="w-full flex items-center relative hover:bg-[rgba(255,255,255,0.03)] cursor-pointer py-[5px] pr-2 rounded-sm transition-colors"
+        className="group w-full flex items-center relative hover:bg-[rgba(255,255,255,0.03)] cursor-pointer py-[5px] pr-2 rounded-sm transition-colors border-l-[2px] border-transparent hover:border-[rgba(113,112,255,0.4)]"
         style={{ 
-          paddingLeft: `${depth * 20 + 8}px`, 
-          animation: 'tree-fade-in 0.2s ease-out forwards',
+          paddingLeft: `${depth * 20 + 6}px`, // reduced by 2px to account for the border
+          animation: 'tree-fade-in 200ms ease-out forwards',
           opacity: 0,
-          animationDelay: `${(depth * 5 + index) * 10}ms`
+          animationDelay: `${(depth * 5 + index) * 20}ms`
         }}
         onClick={() => isFolder && setIsOpen(!isOpen)}
       >

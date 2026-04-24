@@ -12,23 +12,19 @@ type TemplateCardProps = {
 export default function TemplateCard({ template, isActive, isFocused, onClick }: TemplateCardProps) {
   return (
     <div className="relative w-full rounded-md group">
-      {/* Animated Gradient Border (visible only when active) */}
-      {isActive && (
-        <div className="absolute inset-[-1px] rounded-[7px] overflow-hidden pointer-events-none">
-          <div className="absolute inset-[-150%] animate-spin-slow" 
-            style={{
-              background: 'conic-gradient(from 0deg, transparent 0 270deg, var(--accent-bright) 360deg)'
-            }}
-          />
-        </div>
-      )}
-      
       {/* Main Button Surface */}
       <button
         onClick={onClick}
-        className={`relative z-10 w-full flex items-start text-left gap-3 px-3 py-2.5 rounded-md transition-colors outline-none
-          ${isActive ? 'bg-[#171819]' : isFocused ? 'bg-[rgba(255,255,255,0.03)]' : 'hover:bg-[rgba(255,255,255,0.03)] bg-transparent'}
+        className={`relative z-10 w-full flex items-start text-left gap-3 px-3 py-2.5 rounded-md transition-all duration-200 outline-none
+          ${isActive 
+            ? 'animate-card-breathing' 
+            : isFocused 
+              ? 'bg-[rgba(255,255,255,0.03)] hover:translate-x-[3px]' 
+              : 'hover:bg-[rgba(255,255,255,0.03)] hover:translate-x-[3px] bg-transparent'}
         `}
+        style={isActive ? {
+          background: 'linear-gradient(90deg, rgba(94,106,210,0.08) 0%, transparent 100%)'
+        } : {}}
       >
         <div className="flex-shrink-0 mt-0.5 text-base">
           {template.icon}
@@ -50,6 +46,20 @@ export default function TemplateCard({ template, isActive, isFocused, onClick }:
           </p>
         </div>
       </button>
+      
+      <style jsx>{`
+        @keyframes card-breathing {
+          0%, 100% {
+            box-shadow: inset 3px 0 0 rgba(113,112,255,0.6), inset 0 0 20px rgba(113,112,255,0.05);
+          }
+          50% {
+            box-shadow: inset 3px 0 0 rgba(113,112,255,1.0), inset 0 0 20px rgba(113,112,255,0.05);
+          }
+        }
+        .animate-card-breathing {
+          animation: card-breathing 2s infinite ease-in-out;
+        }
+      `}</style>
     </div>
   );
 }

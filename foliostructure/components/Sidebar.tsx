@@ -11,9 +11,10 @@ type SidebarProps = {
   onSelectTemplate: (id: string) => void;
   isOpenMobile: boolean;
   onCloseMobile: () => void;
+  showSplash?: boolean;
 };
 
-export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobile, onCloseMobile }: SidebarProps) {
+export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobile, onCloseMobile, showSplash = false }: SidebarProps) {
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [focusedIndex, setFocusedIndex] = useState<number>(-1);
@@ -100,7 +101,7 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
               placeholder="Search templates..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[rgba(255,255,255,0.04)] border border-[var(--border-default)] rounded-[6px] pl-8 pr-3 py-1.5 text-[13px] text-primary placeholder-[var(--text-subtle)] outline-none focus:border-[var(--accent-bright)] focus:bg-[rgba(255,255,255,0.06)] transition-all"
+              className="w-full bg-[rgba(255,255,255,0.04)] border border-[var(--border-default)] rounded-[6px] pl-8 pr-3 py-1.5 text-[13px] text-primary placeholder-[var(--text-subtle)] outline-none focus:border-[rgba(113,112,255,0.4)] focus:shadow-[0_0_0_3px_rgba(113,112,255,0.1)] focus:bg-[rgba(255,255,255,0.06)] transition-all"
             />
           </div>
         </div>
@@ -111,7 +112,7 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-2.5 py-0.5 rounded-full border text-[12px] font-[510] transition-colors
+              className={`px-2.5 py-0.5 rounded-full border text-[12px] font-[510] transition-all active:scale-95 duration-150
                 ${activeCategory === category 
                   ? 'bg-accent border-accent text-white' 
                   : 'bg-transparent border-[var(--border-default)] text-secondary hover:text-primary hover:bg-[rgba(255,255,255,0.02)]'}
@@ -134,6 +135,11 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
               <div 
                 key={template.id} 
                 onMouseEnter={() => setFocusedIndex(index)}
+                className={!showSplash ? "animate-sidebar-card" : "opacity-0"}
+                style={{ 
+                  animationDelay: !showSplash ? `${index * 60}ms` : '0ms',
+                  animationFillMode: 'forwards'
+                }}
               >
                 <TemplateCard 
                   template={template} 
@@ -153,6 +159,16 @@ export default function Sidebar({ activeTemplateId, onSelectTemplate, isOpenMobi
           )}
         </div>
       </aside>
+      <style jsx>{`
+        @keyframes sidebar-card {
+          0% { opacity: 0; transform: translateX(-12px); }
+          100% { opacity: 1; transform: translateX(0); }
+        }
+        .animate-sidebar-card {
+          opacity: 0;
+          animation: sidebar-card 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+      `}</style>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import Particles from "@/components/Particles";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -16,8 +17,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Trevo",
-  description: "folder structure generator",
+  title: "Trevo — Folder Structure Generator",
+  description: "Instantly visualize and export clean folder structures for any project stack.",
+  icons: { icon: '/favicon.svg' }
 };
 
 export default function RootLayout({
@@ -31,6 +33,7 @@ export default function RootLayout({
       className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans" style={{ fontFeatureSettings: '"cv01", "ss03"' }}>
+        <Particles />
         {children}
       </body>
     </html>

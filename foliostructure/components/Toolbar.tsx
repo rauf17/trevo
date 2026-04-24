@@ -52,7 +52,7 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
       <div className="flex items-center gap-2">
         <button 
           onClick={handleCopy}
-          className="px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-colors flex items-center justify-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)] min-w-[130px]"
+          className="px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-all duration-100 hover:scale-[1.02] hover:brightness-110 flex items-center justify-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)] min-w-[130px]"
         >
           {copied ? (
             <>
@@ -74,7 +74,7 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
 
         <button 
           onClick={handleDownload}
-          className="px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-colors flex items-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)]"
+          className="px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-all duration-100 hover:scale-[1.02] hover:brightness-110 flex items-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)]"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -86,7 +86,7 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
 
         <button 
           onClick={handleToggleAll}
-          className="px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-colors flex items-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)]"
+          className="px-3 py-1.5 bg-[rgba(255,255,255,0.02)] hover:bg-[rgba(255,255,255,0.05)] border border-[var(--border-default)] rounded-[6px] text-[13px] font-[510] text-[var(--text-secondary)] transition-all duration-100 hover:scale-[1.02] hover:brightness-110 flex items-center gap-2 cursor-pointer outline-none focus:border-[var(--accent-bright)]"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             {isExpanded ? (
@@ -113,7 +113,7 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
       <div className="ml-auto flex items-center gap-1 bg-[rgba(255,255,255,0.02)] border border-[var(--border-default)] p-1 rounded-[8px]">
         <button
           onClick={() => setViewMode("ide")}
-          className={`flex items-center justify-center py-1 px-2.5 rounded-[6px] transition-all
+          className={`flex items-center justify-center py-1 px-2.5 rounded-[6px] transition-all duration-100 hover:scale-[1.02] hover:brightness-110
             ${viewMode === "ide" 
               ? "bg-accent text-white shadow-sm" 
               : "text-muted hover:text-primary"}
@@ -130,7 +130,7 @@ export default function Toolbar({ template, viewMode, setViewMode }: ToolbarProp
         
         <button
           onClick={() => setViewMode("ascii")}
-          className={`flex items-center justify-center py-1 px-2.5 rounded-[6px] transition-all
+          className={`flex items-center justify-center py-1 px-2.5 rounded-[6px] transition-all duration-100 hover:scale-[1.02] hover:brightness-110
             ${viewMode === "ascii" 
               ? "bg-accent text-white shadow-sm" 
               : "text-muted hover:text-primary"}
