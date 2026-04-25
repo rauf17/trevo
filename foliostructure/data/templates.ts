@@ -4,7 +4,7 @@ export type TreeNode = {
   children?: TreeNode[];
 };
 
-export type TemplateCategory = "Frontend" | "Backend" | "Fullstack" | "Mobile" | "CLI" | "Monorepo" | "Devops" | "Other";
+export type TemplateCategory = "frontend" | "backend" | "fullstack" | "mobile" | "CLI" | "monorepo" | "devops" | "other";
 
 export interface Template {
   id: string;
@@ -21,7 +21,7 @@ export const templates: Template[] = [
     name: "Next.js App",
     description: "Modern fullstack Next.js app with App Router, Tailwind, and authentication setup.",
     icon: "▲",
-    category: "Fullstack",
+    category: "fullstack",
     tree: [
       {
         name: "app",
@@ -148,7 +148,7 @@ export const templates: Template[] = [
     name: "React + Vite",
     description: "Fast, minimal React frontend application powered by Vite and SWC.",
     icon: "⚡",
-    category: "Frontend",
+    category: "frontend",
     tree: [
       {
         name: "public",
@@ -265,7 +265,7 @@ export const templates: Template[] = [
     name: "Express REST API",
     description: "Robust Node.js backend using Express, MongoDB, and JSON Web Tokens.",
     icon: "⚙️",
-    category: "Backend",
+    category: "backend",
     tree: [
       {
         name: "src",
@@ -381,7 +381,7 @@ export const templates: Template[] = [
     name: "React Native",
     description: "Cross-platform mobile application utilizing React Native CLI and Expo.",
     icon: "📱",
-    category: "Mobile",
+    category: "mobile",
     tree: [
       {
         name: "android",
@@ -586,7 +586,7 @@ export const templates: Template[] = [
     name: "Turborepo Monorepo",
     description: "High-performance monorepo scaling multiple frontend apps and packages.",
     icon: "📦",
-    category: "Monorepo",
+    category: "monorepo",
     tree: [
       {
         name: "apps",
@@ -679,7 +679,7 @@ export const templates: Template[] = [
     name: "Python FastAPI",
     description: "High-performance Python API using FastAPI, SQLAlchemy, and Alembic.",
     icon: "🐍",
-    category: "Backend",
+    category: "backend",
     tree: [
       {
         name: "alembic",
@@ -788,7 +788,7 @@ export const templates: Template[] = [
     name: "Flutter App",
     description: "Cross-platform mobile framework using Dart, Riverpod, and Freezed.",
     icon: "🐦",
-    category: "Mobile",
+    category: "mobile",
     tree: [
       {
         name: "android",
@@ -870,13 +870,12 @@ export const templates: Template[] = [
       { name: "pubspec.yaml", type: "file" },
       { name: "README.md", type: "file" },
     ],
-  },
-  , {
+  }, {
     id: "python-data-science",
     name: "Python Data Science",
     description: "Tags: [\"Python\", \"Pandas\", \"Jupyter\"]",
     icon: "🐼",
-    category: "Backend",
+    category: "backend",
     tree: [
       {
         name: "notebooks",
@@ -1441,7 +1440,7 @@ export const templates: Template[] = [
     name: "Go REST API",
     description: "Tags: [\"Go\", \"Gin\", \"PostgreSQL\"]",
     icon: "🐹",
-    category: "Backend",
+    category: "backend",
     tree: [
       {
         name: "cmd",
@@ -1688,7 +1687,7 @@ export const templates: Template[] = [
     name: "Java Spring Boot",
     description: "Tags: [\"Spring Boot\", \"Maven\", \"JPA\"]",
     icon: "☕",
-    category: "Backend",
+    category: "backend",
     tree: [
       {
         name: "src",
@@ -1893,7 +1892,7 @@ export const templates: Template[] = [
     name: "PHP Laravel",
     description: "Tags: [\"Laravel\", \"MySQL\", \"Blade\"]",
     icon: "🐘",
-    category: "Fullstack",
+    category: "fullstack",
     tree: [
       {
         name: "app",
@@ -2150,7 +2149,7 @@ export const templates: Template[] = [
     name: "Electron Desktop App",
     description: "Tags: [\"Electron\", \"React\", \"TypeScript\"]",
     icon: "🖥️",
-    category: "Frontend",
+    category: "frontend",
     tree: [
       {
         name: "src",
@@ -2329,7 +2328,7 @@ export const templates: Template[] = [
     name: "GraphQL API",
     description: "Tags: [\"GraphQL\", \"Apollo\", \"Prisma\"]",
     icon: "◈",
-    category: "Backend",
+    category: "backend",
     tree: [
       {
         name: "src",
@@ -2520,7 +2519,7 @@ export const templates: Template[] = [
     name: "Unity Game Project",
     description: "Tags: [\"Unity\", \"C#\", \"HLSL\"]",
     icon: "🎮",
-    category: "Other",
+    category: "other",
     tree: [
       {
         name: "Assets",
@@ -2699,7 +2698,7 @@ export const templates: Template[] = [
     name: "Kubernetes + Helm",
     description: "Tags: [\"Kubernetes\", \"Helm\", \"ArgoCD\"]",
     icon: "☸️",
-    category: "Devops",
+    category: "devops",
     tree: [
       {
         name: "helm",
@@ -2858,7 +2857,7 @@ export const templates: Template[] = [
     name: "React Native + Expo",
     description: "Tags: [\"Expo\", \"NativeWind\", \"Zustand\"]",
     icon: "📱",
-    category: "Mobile",
+    category: "mobile",
     tree: [
       {
         name: "app",

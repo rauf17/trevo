@@ -35,12 +35,12 @@ export default function TemplateCard({ template, isActive, isFocused, onClick }:
             className={`w-[6px] h-[6px] rounded-full absolute -left-2 ${isActive ? 'animate-dot-pulse' : ''}`}
             style={{ 
               backgroundColor: 
-                template.category === 'Frontend' ? '#22d3ee' :
-                template.category === 'Backend' ? '#10b981' :
-                template.category === 'Fullstack' ? '#7170ff' :
-                template.category === 'Mobile' ? '#f59e0b' :
+                template.category === 'frontend' ? '#22d3ee' :
+                template.category === 'backend' ? '#10b981' :
+                template.category === 'fullstack' ? '#7170ff' :
+                template.category === 'mobile' ? '#f59e0b' :
                 template.category === 'CLI' ? '#8a8f98' :
-                template.category === 'Monorepo' ? '#e06c75' : '#c678dd'
+                template.category === 'monorepo' ? '#e06c75' : '#c678dd'
             }}
           />
           <span className="ml-1">{template.icon}</span>

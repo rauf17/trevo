@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { templates, Template } from "../data/templates";
 import TemplateCard from "./TemplateCard";
 
-const CATEGORIES = ["All", "Frontend", "Backend", "Fullstack", "Mobile", "CLI", "Devops", "Other"];
+const CATEGORIES = ["All", "frontend", "backend", "fullstack", "mobile", "CLI", "devops", "other"];
 
 type SidebarProps = {
   activeTemplateId: string | null;
