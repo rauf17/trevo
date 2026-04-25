@@ -1087,7 +1087,7 @@ export const templates: Template[] = [
     name: "C++ CMake Project",
     description: "Tags: [\"C++\", \"CMake\", \"GoogleTest\"]",
     icon: "⚙️",
-    category: "Cli",
+    category: "CLI",
     tree: [
       {
         name: "src",
@@ -1268,7 +1268,7 @@ export const templates: Template[] = [
     name: "C Systems Project",
     description: "Tags: [\"C\", \"Make\", \"Valgrind\"]",
     icon: "🔩",
-    category: "Cli",
+    category: "CLI",
     tree: [
       {
         name: "src",
